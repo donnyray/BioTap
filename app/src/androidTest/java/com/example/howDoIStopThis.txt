@@ -1,0 +1,6 @@
+anytime i pull from git
+the package directory
+\com.example.pistachio.biotap
+becomes
+\com\example\pistacio\biotap
+why is this happening???
