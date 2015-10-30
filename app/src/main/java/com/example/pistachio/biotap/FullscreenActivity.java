@@ -1,7 +1,6 @@
 package com.example.pistachio.biotap;
 
 import com.example.pistachio.biotap.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -10,6 +9,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.util.Log;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,33 +23,27 @@ public class FullscreenActivity extends Activity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
-
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
     /**
      * If set, will toggle the system UI visibility upon interaction. Otherwise,
      * will show the system UI visibility upon interaction.
      */
     private static final boolean TOGGLE_ON_CLICK = true;
-
     /**
      * The flags to pass to {@link SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
 
-// format buttons with more descriptive name
+    // format buttons with more descriptive name
     private Button enter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +54,9 @@ public class FullscreenActivity extends Activity {
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
-// format buttons with this style name
-enter  = (Button) findViewById(R.id.activity_fullscreen_enter_button);
+        // format buttons with this style name
+        enter  = (Button) findViewById(R.id.activity_fullscreen_enter_button);
+
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
@@ -119,7 +114,7 @@ enter  = (Button) findViewById(R.id.activity_fullscreen_enter_button);
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.activity_fullscreen_enter_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -131,7 +126,6 @@ enter  = (Button) findViewById(R.id.activity_fullscreen_enter_button);
         // are available.
         delayedHide(100);
     }
-
 
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
