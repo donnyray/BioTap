@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* Creates the List of SequenceTap's to be added to once start button is */
         /*  pressed, and saved to local storage once stop button is pressed.*/
-        final ArrayList<SequenceTap> = new ArrayList<SequenceTap>();
+        final ArrayList<SequenceTap> tapList = new ArrayList<SequenceTap>();
 
         // Creates a new instance of a timer for the start button.
         final Timer sequenceTimer = new SequenceTimer(false);
