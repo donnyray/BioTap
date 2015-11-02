@@ -5,21 +5,21 @@ package pistachio.com.biotap;
 /* Stores the data of one tap. This includes press down and
 /*  up times stored in System/Calendar long millisecond time.*/
 
-public class SequenceTap {
-    private long down;  /*Time when a tap is pushed down.*/
-    private long up;    /*Time when a push down is released.*/
+public class SequenceTap implements Tap {
+    private long downTime;  /*Time when a tap is pushed down.*/
+    private long upTime;    /*Time when a push down is released.*/
 
     /*Constructor.*/
-    public SequenceTap(long d, long u) {
-        this.down = d;
-        this.up = u;
+    public SequenceTap(long dT, long uT) {
+        this.downTime = dT;
+        this.upTime = uT;
     }
 
     /*Setter methods.*/
-    public void setDown(long value)     {this.down = value;}
-    public void setUp(long value)       {this.up = value;}
+    public void setDownTime(long value)     {this.downTime = value;}
+    public void setUpTime(long value)       {this.upTime = value;}
     /*Getter methods.*/
-    public long getDown()               {return this.down;}
-    public long getUp()                 {return this.up;}
+    public long getDownTime()               {return this.downTime;}
+    public long getUpTime()                 {return this.upTime;}
 
 }
