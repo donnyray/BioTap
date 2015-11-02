@@ -18,7 +18,7 @@ public class SequenceTimer implements Timer {
     public boolean getTimer() {
         return this.status;
     }
-
+    /*Constructor*/
     public SequenceTimer(boolean status) {
         this.status = status;
     }
