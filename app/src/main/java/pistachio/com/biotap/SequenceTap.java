@@ -2,8 +2,8 @@ package pistachio.com.biotap;
 
 /* SequenceTap.java*/
 /* Created by Cameron on 11/2/2015.*/
-/* Stores the data of one tap. This includes press down and up times stored in System or Calendar*/
-/*  long's.*/
+/* Stores the data of one tap. This includes press down and
+/*  up times stored in System or Calendar long's.*/
 
 public class SequenceTap {
     private long down;  /*Time when a tap is pushed down.*/
