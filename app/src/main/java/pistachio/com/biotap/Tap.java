@@ -5,12 +5,16 @@ package pistachio.com.biotap;
 /* Interface for TapSequence class.*/
 
 public interface Tap {
-    /*Setter and getter for tap time.*/
+    public String toString();
     /*The call for System.currentTimeMillis and Calendar.getTimeInMillis both return long values.*/
-    void setUpTime(long up);
-    void setDownTime(long down);
-    long getUpTime();
-    long getDownTime();
-
-    /*More to be added for area/location of tap.*/
+    /*Setter methods.*/
+    public void setTime(long value);
+    public void setAction(String value);
+    public void setXCoord(float value);
+    public void setYCoord(float value);
+    /*Getter methods.*/
+    public long getTime();
+    public String getAction();
+    public float getXCoord();
+    public float getYCoord();
 }

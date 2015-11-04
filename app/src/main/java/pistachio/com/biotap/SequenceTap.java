@@ -6,20 +6,34 @@ package pistachio.com.biotap;
 /*  up times stored in System/Calendar long millisecond time.*/
 
 public class SequenceTap implements Tap {
-    private long downTime;  /*Time when a tap is pushed down.*/
-    private long upTime;    /*Time when a push down is released.*/
+    private long lTime;     /*Time when a tap is pushed down.*/
+    private String sAction; /*Action type.*/
+    private float fXCoord;  /*x-coordinate of where the tap occured.*/
+    private float fYCoord;  /*y-coordinate of where the tap occured.*/
 
     /*Constructor.*/
-    public SequenceTap(long dT, long uT) {
-        this.downTime = dT;
-        this.upTime = uT;
+    public SequenceTap(long t, String a, float x, float y) {
+        this.lTime = t;
+        this.sAction = a;
+        this.fXCoord = x;
+        this.fYCoord = y;
+    }
+
+    /*Print out of the Tap sequence.*/
+    public String toString() {
+        return sAction + ", @System Time: " + lTime + " @coordinates (x, y): (" +
+                fXCoord + ", " + fYCoord + ").";
     }
 
     /*Setter methods.*/
-    public void setDownTime(long value)     {this.downTime = value;}
-    public void setUpTime(long value)       {this.upTime = value;}
+    public void setTime(long value)     {this.lTime = value;}
+    public void setAction(String value) {this.sAction = value;}
+    public void setXCoord(float value)  {this.fXCoord = value;}
+    public void setYCoord(float value)  {this.fYCoord = value;}
     /*Getter methods.*/
-    public long getDownTime()               {return this.downTime;}
-    public long getUpTime()                 {return this.upTime;}
+    public long getTime()     {return this.lTime;}
+    public String getAction() {return this.sAction;}
+    public float getXCoord()  {return this.fXCoord;}
+    public float getYCoord()  {return this.fYCoord;}
 
 }
