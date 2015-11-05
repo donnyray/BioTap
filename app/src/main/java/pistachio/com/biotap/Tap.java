@@ -1,20 +1,68 @@
 package pistachio.com.biotap;
 
-/* Tap.java.*/
-/* Created by Cameron on 11/2/2015.*/
-/* Interface for TapSequence class.*/
+public class Tap {
 
-public interface Tap {
-    public String toString();
-    /*The call for System.currentTimeMillis and Calendar.getTimeInMillis both return long values.*/
-    /*Setter methods.*/
-    public void setTime(long value);
-    public void setAction(String value);
-    public void setXCoord(float value);
-    public void setYCoord(float value);
-    /*Getter methods.*/
-    public long getTime();
-    public String getAction();
-    public float getXCoord();
-    public float getYCoord();
+    /**
+     * Timestamp
+     */
+    private long time;
+
+    /**
+     * x coordinate
+     */
+    private float x;
+
+    /**
+     * y coordinate
+     */
+    private float y;
+
+    /**
+     * Create a new instance of a tap.
+     *
+     * @param time
+     * @param x
+     * @param y
+     */
+    private Tap(long time, float x, float y) {
+
+        this.set(time, x, y);
+    }
+
+    /**
+     * Named constructor for a tap.
+     *
+     * @param time
+     * @param x
+     * @param y
+     *
+     * @return Tap
+     */
+    public static Tap record(long time, float x, float y) {
+        return new Tap(time, x, y);
+    }
+
+    /**
+     * Set properties of at tap.
+     *
+     * @param time
+     * @param x
+     * @param y
+     */
+    protected void set(long time, float x, float y) {
+
+        this.time = time;
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Convert object to string.
+     *
+     * @return String
+     */
+    public String toString() {
+        return this.time + "/" + this.x + "/" + this.y;
+    }
+
 }
