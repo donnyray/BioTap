@@ -108,12 +108,20 @@ public class MainActivity extends Activity {
         public boolean onTouch(View v, MotionEvent event) {
 
             if (listening) {
-                Log.d("Touch", String.valueOf(event.getEventTime()));
-                Log.d("X", String.valueOf(event.getX()));
-                Log.d("Y", String.valueOf(event.getY()));
-                taps.add(
-                        Tap.record(event.getEventTime(), event.getX(), event.getY())
-                );
+
+                switch(event.getAction()) {
+                    case android.view.MotionEvent.ACTION_DOWN:
+                        Log.d("Touch", "Down: " + event.getEventTime());
+                        taps.add(Tap.down(event.getEventTime()));
+                        break;
+                    case android.view.MotionEvent.ACTION_UP:
+                        Log.d("Touch", "Up: " + event.getEventTime());
+                        taps.add(Tap.up(event.getEventTime()));
+                        break;
+                }
+
+                return true;
+
             }
 
             return false;

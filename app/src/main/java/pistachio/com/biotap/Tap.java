@@ -7,53 +7,55 @@ public class Tap {
      */
     private long time;
 
-    /**
-     * x coordinate
-     */
-    private float x;
+    private Action action;
 
-    /**
-     * y coordinate
-     */
-    private float y;
+    public static enum Action {
+        UP,
+        DOWN
+    };
 
     /**
      * Create a new instance of a tap.
      *
      * @param time
-     * @param x
-     * @param y
      */
-    private Tap(long time, float x, float y) {
-
-        this.set(time, x, y);
+    private Tap(long time, Tap.Action action) {
+        this.set(time, action);
     }
 
     /**
-     * Named constructor for a tap.
+     * Named constructor for a up tap.
      *
      * @param time
-     * @param x
-     * @param y
      *
      * @return Tap
      */
-    public static Tap record(long time, float x, float y) {
-        return new Tap(time, x, y);
+    public static Tap up(long time) {
+        return new Tap(time, Action.UP);
+    }
+
+
+    /**
+     * Named constructor for a down tap.
+     *
+     * @param time
+     *
+     * @return Tap
+     */
+    public static Tap down(long time) {
+        return new Tap(time, Action.DOWN);
     }
 
     /**
      * Set properties of at tap.
      *
      * @param time
-     * @param x
-     * @param y
      */
-    protected void set(long time, float x, float y) {
+    protected void set(long time, Tap.Action action) {
 
         this.time = time;
-        this.x = x;
-        this.y = y;
+        this.action = action;
+
     }
 
     /**
@@ -62,7 +64,7 @@ public class Tap {
      * @return String
      */
     public String toString() {
-        return this.time + "/" + this.x + "/" + this.y;
+        return this.action + ", " + this.time;
     }
 
 }
