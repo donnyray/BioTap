@@ -58,13 +58,17 @@ public class Tap {
 
     }
 
-    /**
-     * Convert object to string.
-     *
-     * @return String
-     */
+    /*Convert object to string.*/
+    /* @return String */
     public String toString() {
-        return this.action + ", " + this.time;
+        return this.getTime() + ", " + this.getAction();
     }
 
+    public long getTime() {
+        return this.time;
+    }
+
+    public Action getAction() {
+        return this.action;
+    }
 }
