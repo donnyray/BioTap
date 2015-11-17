@@ -1,53 +1,120 @@
 package pistachio.com.biotap;
 
-public class Tap {
+public class Tap implements TapInterface {
 
     /**
-     * Timestamp
+     * Timestamp of tap.
      */
     private long time;
 
     /**
-     * Create a new instance of a tap.
-     *
-     * @param time
+     * Interval of tap.
      */
-    private Tap(long time) {
-        this.set(time);
-    }
-
+    private long interval;
 
     /**
-     * Named constructor for a tap.
+     * X coordinate of tap.
+     */
+    private int x;
+
+    /**
+     * Y coordinate of tap.
+     */
+    private int y;
+
+    /**
+     * Create a new instance of a tap with an interval.
      *
      * @param time
-     *
-     * @return Tap
+     * @param interval;
      */
-    public static Tap record(long time) {
-        return new Tap(time);
+    public Tap(long time, long interval, int x, int y) {
+        this.set(time, interval, x, y);
     }
 
     /**
-     * Set properties of at tap.
+     * Create a new instance of a tap without an interval.
      *
      * @param time
+     * @param x
+     * @param y
      */
-    protected void set(long time) {
+    public Tap(long time, int x, int y) {
+        this.set(time, 0, x, y);
+    }
 
+    /**
+     * Set properties on instance.
+     *
+     * @param time
+     * @param interval
+     * @param x
+     * @param y
+     */
+    protected void set(long time, long interval, int x, int y) {
         this.time = time;
-
+        this.interval = interval;
+        this.x = x;
+        this.y = y;
     }
 
+    /**
+     * Get string value of tap.
+     *
+     * @return
+     */
     public String toString() {
-        return String.valueOf(this.getTime());
+        return this.getTime() + "/" + this.getInterval() + "/" + this.getX() + "/" + this.getY();
     }
 
     /**
      * Get the time interval between down and up.
+     *
      * @return
      */
-    public long getTime() {
-        return this.time;
-    }
+    public long getTime() { return this.time; }
+
+    /**
+     * Get the action of the tap.
+     *
+     * @return
+     */
+    public long getInterval() { return this.interval; }
+
+    /**
+     * Set the interval of the tap.
+     *
+     * @param interval
+     * @return
+     */
+    public long setInterval(long interval) { return this.interval = interval; }
+
+    /**
+     * Get the x coordinate of tap.
+     *
+     * @return
+     */
+    public int getX() { return this.x; }
+
+    /**
+     * Get the y coordinate of tap.
+     *
+     * @return
+     */
+    public int getY() { return this.y; }
+
+    /**
+     * Get the timestamp of down touch.
+     *
+     * @return
+     */
+    public long getDownTime() { return this.time; }
+
+    /**
+     * Get the timestamp of up touch.
+     *
+     * @return
+     */
+    public long getUpTime() { return this.time + this.interval; }
+
 }

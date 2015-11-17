@@ -11,11 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -24,13 +22,15 @@ public class MainActivity extends Activity {
 
     protected View grid;
 
-    protected ArrayList<Tap> taps;
+    protected ArrayList<TapInterface> taps;
 
     protected boolean listening;
 
     protected FileOutputStream file;
 
-    protected long timestamp = 0;
+    protected long absoluteTapTime = 0;
+
+    protected TapInterface currentTap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,15 +38,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.button = (Button)findViewById(R.id.start_btn);
-
         this.grid = findViewById(R.id.grid);
-
         this.taps = new ArrayList<>();
-
         this.listening = false;
-
         this.button.setOnClickListener(buttonListener);
-
         this.grid.setOnTouchListener(gridListener);
 
 
@@ -80,24 +75,20 @@ public class MainActivity extends Activity {
         public void onClick(View v) {
 
             if (listening) {
-                Log.d("Button", "Stopped listening.");
-                button.setText("Start");
-                button.setBackgroundColor(0xFF4CAF50);
+                Log.d("Button", "Stopped listening for taps.");
+                startButton();
                 String data = taps.toString() + "\n";
-
                 try {
                     file.write(data.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 taps = new ArrayList<>();
-
+                absoluteTapTime = 0;
+                currentTap = null;
             } else {
-                Log.d("Button", "Started listening.");
-                button.setText("Stop");
-                button.setBackgroundColor(0xFFF44336);
-
+                Log.d("Button", "Started listening for taps.");
+                stopButton();
             }
 
             listening = ! listening;
@@ -107,26 +98,39 @@ public class MainActivity extends Activity {
     View.OnTouchListener gridListener = new View.OnTouchListener() {
 
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
+        public boolean onTouch(View v, MotionEvent e) {
 
             if (listening) {
-
-                switch(event.getAction()) {
+                switch(e.getAction()) {
                     case android.view.MotionEvent.ACTION_DOWN:
-                        timestamp = event.getEventTime();
+                        if (absoluteTapTime == 0) {
+                            absoluteTapTime = e.getEventTime();
+                        }
+                        currentTap = new Tap(e.getEventTime() - absoluteTapTime, (int)e.getX(), (int)e.getY());
+                        Log.d("Touch", "Down: " + currentTap.toString());
                         break;
                     case android.view.MotionEvent.ACTION_UP:
-                        taps.add(Tap.record(event.getEventTime() - timestamp));
-                        Log.d("Touch", "Interval: " + (event.getEventTime() - timestamp));
+                        currentTap.setInterval((e.getEventTime() - absoluteTapTime) - currentTap.getTime());
+                        taps.add(currentTap);
+                        Log.d("Touch", "Up: " + currentTap.toString());
                         break;
                 }
 
                 return true;
-
             }
 
             return false;
         }
     };
+
+    protected void startButton() {
+        button.setText("Start");
+        button.setBackgroundColor(0xFF4CAF50);
+    }
+
+    protected void stopButton() {
+        button.setText("Stop");
+        button.setBackgroundColor(0xFFF44336);
+    }
 
 }
