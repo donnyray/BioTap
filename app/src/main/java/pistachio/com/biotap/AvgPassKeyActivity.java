@@ -37,6 +37,8 @@ public class AvgPassKeyActivity extends Activity {
 
     private int sequenceCount = 0;
 
+    private int tapSize = 0;
+
 
 
     @Override
@@ -86,7 +88,7 @@ public class AvgPassKeyActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    View.OnClickListener buttonListener = new View.OnClickListener() {
+    protected View.OnClickListener buttonListener = new View.OnClickListener() {
 
 
         @Override
@@ -97,27 +99,26 @@ public class AvgPassKeyActivity extends Activity {
                 button.setText("Start");
                 button.setBackgroundColor(0xFF4CAF50);
 
-
-                progressBarStatus += progressBar.getProgress();
                 sequenceCount++;
-                String avgData = temp.toString() + "\n";
 
-                if(sequenceCount < 3) {
+
+                if(sequenceCount == 1 ) {
+                    Iterator<Tap> tapIterator = taps.iterator();
+                    tapSize = taps.size();
+                    while (tapIterator.hasNext()) {
+                        temp.add(tapIterator.next());
+                    }
+                    String avgData = taps.toString() + "\n";
                     try {
                         file.write(avgData.getBytes());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                Iterator<Tap> tapIterator = taps.iterator();
-                while(tapIterator.hasNext()) {
-                    temp.add(tapIterator.next());
-                }
-                try {
-
-                    Log.d("**SIZE**", String.valueOf(taps.size()));
-                    if (sequenceCount > 1) {
-
+                    /* need to start over if taps.size() != tapsSize */
+                } else {
+                    try {
+                        Log.d("**SIZE**", String.valueOf(taps.size()));
+                        Log.d("**SIZE**", String.valueOf(temp.size()));
                         for (int i = 0; i < taps.size(); i++) {
                             temp.set(i, (temp.get(i).avgUpdateTap(
                                     taps.get(i).getTime(),
@@ -125,17 +126,26 @@ public class AvgPassKeyActivity extends Activity {
                                     taps.get(i).getY(),
                                     sequenceCount)));
                         }
-
-
-                        try {
-                            file.write(avgData.getBytes());
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if(sequenceCount < 3) {
+                            String avgData = taps.toString() + "\n";
+                            try {
+                                file.write(avgData.getBytes());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            String avgData = temp.toString() + "\n";
+                            try {
+                                file.write(avgData.getBytes());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
+                    } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
                     }
-                } catch (IndexOutOfBoundsException e) {
-                    e.printStackTrace();
                 }
+
                 taps = new ArrayList<>();
 
             } else {
