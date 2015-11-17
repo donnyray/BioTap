@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
                         Log.d("Touch", "Down: " + currentTap.toString());
                         break;
                     case android.view.MotionEvent.ACTION_UP:
-                        currentTap.setInterval((e.getEventTime() - absoluteTapTime) - currentTap.getTime());
+                        currentTap.setDuration((e.getEventTime() - absoluteTapTime) - currentTap.getTime());
                         taps.add(currentTap);
                         Log.d("Touch", "Up: " + currentTap.toString());
                         break;

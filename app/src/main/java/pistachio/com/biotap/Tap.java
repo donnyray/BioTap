@@ -8,9 +8,9 @@ public class Tap implements TapInterface {
     private long time;
 
     /**
-     * Interval of tap.
+     * Duration of tap.
      */
-    private long interval;
+    private long duration;
 
     /**
      * X coordinate of tap.
@@ -26,10 +26,10 @@ public class Tap implements TapInterface {
      * Create a new instance of a tap with an interval.
      *
      * @param time
-     * @param interval;
+     * @param duration;
      */
-    public Tap(long time, long interval, int x, int y) {
-        this.set(time, interval, x, y);
+    public Tap(long time, long duration, int x, int y) {
+        this.set(time, duration, x, y);
     }
 
     /**
@@ -47,13 +47,13 @@ public class Tap implements TapInterface {
      * Set properties on instance.
      *
      * @param time
-     * @param interval
+     * @param duration
      * @param x
      * @param y
      */
-    protected void set(long time, long interval, int x, int y) {
+    protected void set(long time, long duration, int x, int y) {
         this.time = time;
-        this.interval = interval;
+        this.duration = duration;
         this.x = x;
         this.y = y;
     }
@@ -64,7 +64,7 @@ public class Tap implements TapInterface {
      * @return
      */
     public String toString() {
-        return this.getTime() + "/" + this.getInterval() + "/" + this.getX() + "/" + this.getY();
+        return this.getTime() + "/" + this.getDuration() + "/" + this.getX() + "/" + this.getY();
     }
 
     /**
@@ -79,15 +79,15 @@ public class Tap implements TapInterface {
      *
      * @return
      */
-    public long getInterval() { return this.interval; }
+    public long getDuration() { return this.duration; }
 
     /**
      * Set the interval of the tap.
      *
-     * @param interval
+     * @param duration
      * @return
      */
-    public long setInterval(long interval) { return this.interval = interval; }
+    public long setDuration(long duration) { return this.duration = duration; }
 
     /**
      * Get the x coordinate of tap.
@@ -115,6 +115,6 @@ public class Tap implements TapInterface {
      *
      * @return
      */
-    public long getUpTime() { return this.time + this.interval; }
+    public long getUpTime() { return this.time + this.duration; }
 
 }

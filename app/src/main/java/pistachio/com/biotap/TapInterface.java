@@ -10,19 +10,19 @@ public interface TapInterface {
     public long getTime();
 
     /**
-     * Get the interval of the tap press.
+     * Get the duration of the tap press.
      *
      * @return
      */
-    public long getInterval();
+    public long getDuration();
 
     /**
-     * Set the interval tap press.
+     * Set the duration tap press.
      *
-     * @param interval
+     * @param duration
      * @return
      */
-    public long setInterval(long interval);
+    public long setDuration(long duration);
 
     /**
      * Get the x coordinate of down tap.
