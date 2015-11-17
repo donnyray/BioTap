@@ -7,43 +7,25 @@ public class Tap {
      */
     private long time;
 
-    private Action action;
-
-    public static enum Action {
-        UP,
-        DOWN
-    };
-
     /**
      * Create a new instance of a tap.
      *
      * @param time
      */
-    private Tap(long time, Tap.Action action) {
-        this.set(time, action);
+    private Tap(long time) {
+        this.set(time);
     }
 
+
     /**
-     * Named constructor for a up tap.
+     * Named constructor for a tap.
      *
      * @param time
      *
      * @return Tap
      */
-    public static Tap up(long time) {
-        return new Tap(time, Action.UP);
-    }
-
-
-    /**
-     * Named constructor for a down tap.
-     *
-     * @param time
-     *
-     * @return Tap
-     */
-    public static Tap down(long time) {
-        return new Tap(time, Action.DOWN);
+    public static Tap record(long time) {
+        return new Tap(time);
     }
 
     /**
@@ -51,24 +33,21 @@ public class Tap {
      *
      * @param time
      */
-    protected void set(long time, Tap.Action action) {
+    protected void set(long time) {
 
         this.time = time;
-        this.action = action;
 
     }
 
-    /*Convert object to string.*/
-    /* @return String */
     public String toString() {
-        return this.getTime() + ", " + this.getAction();
+        return String.valueOf(this.getTime());
     }
 
+    /**
+     * Get the time interval between down and up.
+     * @return
+     */
     public long getTime() {
         return this.time;
-    }
-
-    public Action getAction() {
-        return this.action;
     }
 }

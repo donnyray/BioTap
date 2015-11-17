@@ -30,6 +30,8 @@ public class MainActivity extends Activity {
 
     protected FileOutputStream file;
 
+    protected long timestamp = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,12 +113,11 @@ public class MainActivity extends Activity {
 
                 switch(event.getAction()) {
                     case android.view.MotionEvent.ACTION_DOWN:
-                        Log.d("Touch", "Down: " + event.getEventTime());
-                        taps.add(Tap.down(event.getEventTime()));
+                        timestamp = event.getEventTime();
                         break;
                     case android.view.MotionEvent.ACTION_UP:
-                        Log.d("Touch", "Up: " + event.getEventTime());
-                        taps.add(Tap.up(event.getEventTime()));
+                        taps.add(Tap.record(event.getEventTime() - timestamp));
+                        Log.d("Touch", "Interval: " + (event.getEventTime() - timestamp));
                         break;
                 }
 
