@@ -43,13 +43,21 @@ public class Tap {
     }
 
     /*Getters. Used for comparison algorithm.*/
-    public float getX() {
-        return this.x;
-    }
+    public float getX() {return this.x;}
     public float getY() {
         return this.y;
     }
-    public long getTime() {
-        return this.time;
+    public long getTime() {return this.time;}
+
+    /* Update the properties of a tap for averaging.  Get current value,
+     * add new tap value to current and divide by count.  */
+    public Tap avgUpdateTap(long time, float x, float y, int count) {
+        this.time = ( (this.getTime() + time) / count);
+        this.x =  ( (this.getX() + x) / count );
+        this.y = ( (this.getY() + y) / count);
+
+        return new Tap(this.time, this.x, this.y);
     }
+
 }
+
