@@ -6,15 +6,19 @@ package pistachio.com.biotap;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/* To work on unit tests, switch the Test Artifact in the Build*/
-/*  Variants view.*/
-public class AlgoUnitTest {
-    @Test
+
+/**
+ *
+ * @author Cameron
+ */
+import java.util.ArrayList;
+
+public class TestClass {
     public static void main(String[] args) {
         /*Create two identical ArrayLists to be tested.*/
-        ArrayList<Tap> att1 = new ArrayList<Tap>;
-        ArrayList<Tap> att2 = new ArrayList<Tap>;
-        ArrayList<Tap> att3 = new ArrayList<Tap>;
+        ArrayList<Tap> att1 = new ArrayList<>();
+        ArrayList<Tap> att2 = new ArrayList<>();
+        ArrayList<Tap> att3 = new ArrayList<>();
         /*Taps that will be added to sequence.*/
         Tap t0 = new Tap( 0, 50, 405, 605);
         Tap t1 = new Tap( 5, 40, 305, 400);
@@ -29,31 +33,31 @@ public class AlgoUnitTest {
         
         /*Adding taps to the trial sequences.*/
         att1.add(t0);
-        att2.add(t0);
-        att3.add(t0);
+        att2.add(t6);
+        att3.add(t3);
         
         att1.add(t1);
-        att2.add(t1);
+        att2.add(t2);
         att3.add(t1);
         
-        att1.add(t2);
-        att2.add(t2);
+        att1.add(t7);
+        att2.add(t5);
         att3.add(t2);
         
-        att1.add(t3);
+        att1.add(t1);
         att2.add(t3);
-        att3.add(t3);
+        att3.add(t1);
         
-        att1.add(t4);
+        att1.add(t1);
         att2.add(t4);
-        att3.add(t4);
+        att3.add(t6);
         
-        att1.add(t3);
+        att1.add(t8);
         att2.add(t3);
-        att3.add(t3);
+        att3.add(t2);
         
         /*Creates a false attempt.*/
-        Arraylist<Tap> attempt = new ArrayList<Tap>;
+        ArrayList<Tap> attempt = new ArrayList<>();
         attempt.add(t4);
         attempt.add(t3);
         attempt.add(t0);
@@ -62,12 +66,12 @@ public class AlgoUnitTest {
         attempt.add(t7);        
         
         /*Put attempts in an array of sequences.*/
-        ArrayList<Tap>[] diffSeq = new ArrayList<Tap>[3];
+        ArrayList<Tap>[] diffSeq = (ArrayList<Tap>[])new ArrayList[3];
         diffSeq[0] = att1;
         diffSeq[1] = att2;
         diffSeq[2] = att3;
         
-        ArrayList<Tap>[] sameSeq = new ArrayList<Tap>[3];
+        ArrayList<Tap>[] sameSeq = (ArrayList<Tap>[])new ArrayList[3];
         sameSeq[0] = att1;
         sameSeq[1] = att1;
         sameSeq[2] = att1;
@@ -85,25 +89,25 @@ public class AlgoUnitTest {
         System.out.print(" of diffSeq\n");
         /*Create mean sequence of different trials.*/
         ArrayList<Tap> meanDiff = Compare.meanSeq(3, diffSeq);
-        System.out.print(meanDiff.toString() + "\n");
+        System.out.print("MeanDiff " + meanDiff.toString() + "\n");
         /*Create standard deviation sequence of different trials*/
-        ArrayList<Tap> sdDiff = Compare.standardDeviation(3, diffSeq);
+        ArrayList<Tap> sdDiff = Compare.standDeviation(3, diffSeq);
         System.out.print(sdDiff.toString() + "\n");
         /*Determine similarity score.*/
-        double d = Compare.dissimilarityScore(meanDiff, attempt, sdDiff);
-        System.out.print("Dissimilarity Score: " + d + "\n\n");
+        double d1 = Compare.dissimilarityScore(meanDiff, attempt, sdDiff);
+        System.out.print("Dissimilarity Score MeanDiff: " + d1 + "\n\n");
         
         System.out.print("Test 2: Mean, StdDev, and DisScore");
         System.out.print(" of sameSeq\n");
         /*Create mean sequence of different trials.*/
         ArrayList<Tap> meanSame = Compare.meanSeq(3, sameSeq);
-        System.out.print(meanSame.toString() + "\n");
+        System.out.print("MeanSame " + meanSame.toString() + "\n");
         /*Create standard deviation sequence of different trials*/
-        ArrayList<Tap> sdSame = Compare.standardDeviation(3, sameSeq);
+        ArrayList<Tap> sdSame = Compare.standDeviation(3, sameSeq);
         System.out.print(sdSame.toString() + "\n");
         /*Determine similarity score.*/
-        double d = Compare.dissimilarityScore(meanSame, attempt, sdSame);
-        System.out.print("Dissimilarity Score: " + d + "\n\n");
+        double d2 = Compare.dissimilarityScore(meanSame, attempt, sdSame);
+        System.out.print("Dissimilarity Score MeanSame: " + d2 + "\n\n");
         
     }
     
@@ -115,3 +119,4 @@ public class AlgoUnitTest {
     
     
     
+}
