@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tapaverager;
-
+package main.java.edu.ccsu.pistachio.interfaces;
 
 public interface TapInterface {
 
     /**
-     * Get the timestamp of the tap event.
+     * Get the time stamp of the tap event.
      *
      * @return
      */
@@ -45,14 +39,14 @@ public interface TapInterface {
     public int getY();
 
     /**
-     * Get the timestamp of the down action in a tap.
+     * Get the time stamp of the down action in a tap.
      *
      * @return
      */
     public long getDownTime();
 
     /**
-     * Get the timestamp of the up action in a tap.
+     * Get the time stamp of the up action in a tap.
      *
      * @return
      */

@@ -75,9 +75,17 @@ public class MainActivity extends Activity {
         public void onClick(View v) {
 
             if (listening) {
-                Log.d("Button", "Stopped listening for taps.");
+                Log.d("Button", "Stopped listening for taps...");
                 startButton();
-                String data = taps.toString() + "\n";
+                String data = "";
+                for (int i = 0; i < taps.size(); i++) {
+                    data += taps.get(i).toString();
+
+                    if (i != taps.size() - 1) {
+                        data += ",";
+                    }
+                }
+                data += "\n";
                 try {
                     file.write(data.getBytes());
                 } catch (IOException e) {
