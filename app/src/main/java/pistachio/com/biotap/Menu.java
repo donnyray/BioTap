@@ -46,7 +46,7 @@ public class Menu extends AppCompatActivity {
 
         regBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent registerScreen = new Intent(getApplicationContext(), MainActivity.class);
+                Intent registerScreen = new Intent(getApplicationContext(), AvgPassKeyActivity.class);
 
                 Log.d("Register Button", "Pressed");
 

@@ -34,7 +34,6 @@
         </activity>
 
         <activity android:name=".AvgPassKeyActivity"
-            android:Lable="@title_activity_avg_pass_key"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

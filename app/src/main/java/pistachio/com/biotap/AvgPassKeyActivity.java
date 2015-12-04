@@ -60,7 +60,7 @@ public class AvgPassKeyActivity extends Activity {
 
         this.grid.setOnTouchListener(gridListener);
 
-        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
+//        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
 
@@ -114,18 +114,22 @@ public class AvgPassKeyActivity extends Activity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    /* need to start over if taps.size() != tapsSize */
+                    // need to start over if taps.size() != tapsSize
                 } else {
                     try {
                         Log.d("**SIZE**", String.valueOf(taps.size()));
                         Log.d("**SIZE**", String.valueOf(temp.size()));
-                        for (int i = 0; i < taps.size(); i++) {
+
+
+/*                        for (int i = 0; i < taps.size(); i++) {
                             temp.set(i, (temp.get(i).avgUpdateTap(
                                     taps.get(i).getTime(),
                                     taps.get(i).getX(),
                                     taps.get(i).getY(),
                                     sequenceCount)));
-                        }
+                   } */
+
+
                         if(sequenceCount < 3) {
                             String avgData = taps.toString() + "\n";
                             try {
@@ -166,6 +170,7 @@ public class AvgPassKeyActivity extends Activity {
 
     };
 
+
     View.OnTouchListener gridListener = new View.OnTouchListener() {
 
         @Override
@@ -175,9 +180,12 @@ public class AvgPassKeyActivity extends Activity {
                 Log.d("Touch", String.valueOf(event.getEventTime()));
                 Log.d("X", String.valueOf(event.getX()));
                 Log.d("Y", String.valueOf(event.getY()));
+
+/*
                     taps.add(
                             Tap.record(event.getEventTime(), event.getX(), event.getY()));
 
+*/
             }
 
             return false;
