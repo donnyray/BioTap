@@ -51,8 +51,11 @@ public class Compare {
         double total = 0.0;
         total += longTapForm(master.getTime(), attempt.getTime(), sd.getTime());
         total += longTapForm(master.getDuration(), attempt.getDuration(), sd.getDuration());
-        total += intTapForm(master.getX(), attempt.getX(), sd.getX());
-        total += intTapForm(master.getY(), attempt.getY(), sd.getY());
+        
+        // x,y coord scores are no longer taken into account for dissimilarity score
+        // can be added back in easily by uncommenting
+        //total += intTapForm(master.getX(), attempt.getX(), sd.getX());
+        //total += intTapForm(master.getY(), attempt.getY(), sd.getY());
 
         return total;
     }
