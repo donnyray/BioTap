@@ -7,4 +7,14 @@
     <string name="Grid">Grid</string>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_statistics">Statistics</string>
+    <string name="back_btn">Back</string>
+    <string name="statText01">0</string>
+    <string name="statText02">0</string>
+    <string name="statText03">0</string>
+    <string name="statText04">---%</string>
+    <string name="statTitle00">BIO-STATS</string>
+    <string name="statTitle01">Passkey Attempts: </string>
+    <string name="statTitle02">Accepted Passkeys: </string>
+    <string name="statTitle03">Dissimilarity Score: </string>
+    <string name="statTitle04">Acceptance Rate: </string>
 </resources>
