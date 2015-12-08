@@ -91,6 +91,15 @@ public class MainActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
+                /*
+                 * not sure if file for hold stats should
+                 * be updated here or in some other class
+                 * probably better to through it into what
+                 * ever class is actually doing the judging,
+                 * which im not sure what that is
+                 */
+                
                 taps = new ArrayList<>();
                 absoluteTapTime = 0;
                 currentTap = null;
