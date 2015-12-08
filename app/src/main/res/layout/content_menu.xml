@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_menu" tools:context="pistachio.com.biotap.Menu">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_menu"
+        tools:context="pistachio.com.biotap.Menu">
 
     <Button
         android:layout_width="wrap_content"
@@ -17,8 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="300dp"
-
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
         android:textStyle="bold"
         android:layout_alignRight="@+id/stat_btn"
         android:layout_alignEnd="@+id/stat_btn" />
@@ -28,11 +31,9 @@
         android:layout_height="wrap_content"
         android:text="Statistics"
         android:id="@+id/stat_btn"
-        android:textStyle="bold"
         android:layout_below="@+id/login_btn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_marginBottom="100dp"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="wrap_content"
@@ -46,14 +47,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/editText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/login_btn"
-        android:src="@drawable/biotap"
-        android:layout_alignParentTop="true" />
+        android:layout_alignTop="@+id/login_btn"
+        android:layout_alignBottom="@+id/register_btn"
+        android:text="B\nI\nO\nT\nA\nP"
+        android:maxLines="6"
+        android:ellipsize="none"
+        android:maxWidth="5dp"
+        android:minHeight="10dp"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:width="70dp"
+        android:textAlignment="center"
+        android:textColor="#94C476" />
 
 </RelativeLayout>
