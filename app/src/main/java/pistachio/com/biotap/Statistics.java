@@ -31,15 +31,6 @@ public class Statistics extends AppCompatActivity {
     protected StringBuilder sb;
     protected String data;
 
-    FileInputStream in = openFileInput("filename.txt");
-    InputStreamReader inputStreamReader = new InputStreamReader(in);
-    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-    StringBuilder sb = new StringBuilder();
-    String line;
-    while ((line = bufferedReader.readLine()) != null) {
-        sb.append(line);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +39,12 @@ public class Statistics extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         /* gets data from file, puts it on a string */
+        /*!!!COMMENTED OUT SO PROGRAM WILL RUN WITH DUMMY NUMBERS !!!
+         *!!!SINCE tapStats.txt DOES NOT EXIST YET!!!
+
         try {
             this.statFile = openFileInput("tapStats.txt");
-            this.inputStreamReader = new InputStreamReader(in);
+            this.inputStreamReader = new InputStreamReader(statFile);
             this.bufferedReader = new BufferedReader (inputStreamReader);
             this.sb = new StringBuilder();
             try {
@@ -62,6 +56,7 @@ public class Statistics extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        */
 
         /* Create back button and give it a listener. */
         Button backBtn = (Button) findViewById(R.id.back_btn);
@@ -80,11 +75,13 @@ public class Statistics extends AppCompatActivity {
         double iPercent = 0.0;
 
         /* Splits up data string, assigns values to ints */
+        /*!!!COMMENTED OUT FOR DUMMY NUMBERS!!
         String breakData[] = data.split(",", 3);
         iAttempts = Integer.parseInt(breakData[0]);
         iAccepted = Integer.parseInt(breakData[1]);
         iDissim   = Integer.parseInt(breakData[2]);
-        
+        */
+
         /* dummy data: to be removed later */
         iAttempts = 12;
         iAccepted = 5;
