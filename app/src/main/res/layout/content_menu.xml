@@ -44,24 +44,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/imageView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/login_btn"
-        android:layout_alignBottom="@+id/register_btn"
-        android:text="B\nI\nO\nT\nA\nP"
-        android:maxLines="6"
-        android:ellipsize="none"
-        android:maxWidth="5dp"
-        android:minHeight="10dp"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:typeface="serif"
-        android:width="70dp"
-        android:textAlignment="center"
-        android:textColor="#94C476" />
+        android:layout_toEndOf="@+id/login_btn"
+        android:src="@drawable/biotap"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
