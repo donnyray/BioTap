@@ -1,5 +1,6 @@
 package pistachio.com.biotap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,10 +13,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 
 
+
 public class Statistics extends AppCompatActivity {
+
+    protected FileInputStream statFile;
+    protected InputStreamReader inputStreamReader;
+    protected BufferedReader bufferedReader;
+    protected StringBuilder sb;
+    protected String data;
+
+    FileInputStream in = openFileInput("filename.txt");
+    InputStreamReader inputStreamReader = new InputStreamReader(in);
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+    StringBuilder sb = new StringBuilder();
+    String line;
+    while ((line = bufferedReader.readLine()) != null) {
+        sb.append(line);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +46,22 @@ public class Statistics extends AppCompatActivity {
         setContentView(R.layout.activity_statistics);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /* gets data from file, puts it on a string */
+        try {
+            this.statFile = openFileInput("tapStats.txt");
+            this.inputStreamReader = new InputStreamReader(in);
+            this.bufferedReader = new BufferedReader (inputStreamReader);
+            this.sb = new StringBuilder();
+            try {
+                data = bufferedReader.readLine();
+                sb.append(data);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         /* Create back button and give it a listener. */
         Button backBtn = (Button) findViewById(R.id.back_btn);
@@ -40,14 +79,13 @@ public class Statistics extends AppCompatActivity {
         int iDissim = 0;
         double iPercent = 0.0;
 
-        /*
-         * need to get stats from txt file here
-         * putting in dummy values for testing
-         * until i figure it out
-         * actually txt file should have 3 #s:
-         * attempts, accepted, and disim score
-         */
+        /* Splits up data string, assigns values to ints */
+        String breakData[] = data.split(",", 3);
+        iAttempts = Integer.parseInt(breakData[0]);
+        iAccepted = Integer.parseInt(breakData[1]);
+        iDissim   = Integer.parseInt(breakData[2]);
         
+        /* dummy data: to be removed later */
         iAttempts = 12;
         iAccepted = 5;
         iDissim = 15;
