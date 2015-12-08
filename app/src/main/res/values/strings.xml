@@ -5,4 +5,6 @@
     <string name="stop_btn">Stop</string>
     <string name="grid_image">grid image</string>
     <string name="Grid">Grid</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_statistics">Statistics</string>
 </resources>
