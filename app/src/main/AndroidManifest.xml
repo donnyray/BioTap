@@ -1,3 +1,6 @@
+
+<!--in order to run on an android for debugging, put android:debuggable="true"
+    under the application element. do not leave on though-->
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pistachio.com.biotap" >
