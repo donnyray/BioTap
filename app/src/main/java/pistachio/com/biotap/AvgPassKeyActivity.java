@@ -1,7 +1,11 @@
 package pistachio.com.biotap;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class AvgPassKeyActivity extends Activity {
@@ -23,54 +28,49 @@ public class AvgPassKeyActivity extends Activity {
 
     protected View grid;
 
-    protected ArrayList<Tap> taps;
+    protected List<TapInterface> taps;
 
-    protected ArrayList<Tap> temp;
+    protected List<List<TapInterface>> average;
 
     protected boolean listening;
 
     protected FileOutputStream file;
 
-    protected ProgressBar progressBar;
+    protected long absoluteTapTime = 0;
 
-    private int progressBarStatus;
-
-    private int sequenceCount = 0;
-
-    private int tapSize = 0;
-
-
+    protected TapInterface currentTap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avg_pass_key);
 
-        this.button = (Button) findViewById(R.id.start_btn);
-
+        this.button = (Button)findViewById(R.id.start_btn);
         this.grid = findViewById(R.id.grid);
-
         this.taps = new ArrayList<>();
-
-        this.temp = new ArrayList<>();
-
+        this.average = new ArrayList<List<TapInterface>>();
         this.listening = false;
-
         this.button.setOnClickListener(buttonListener);
-
         this.grid.setOnTouchListener(gridListener);
-
-//        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
 
 
         try {
-            this.file = openFileOutput("avgPassKey.txt", Context.MODE_PRIVATE);
+            this.file = openFileOutput("average", Context.MODE_PRIVATE);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Go ahead and tap out three tap sequences, pressing start and stop between each one.")
+                .setCancelable(false)
+                .setPositiveButton("Ok, sounds good", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                });
+        builder.create().show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,102 +95,145 @@ public class AvgPassKeyActivity extends Activity {
         public void onClick(View v) {
 
             if (listening) {
-                Log.d("Button", "Stopped listening.");
-                button.setText("Start");
-                button.setBackgroundColor(0xFF4CAF50);
+                Log.d("Button", "Stopped listening for taps...");
+                startButton();
 
-                sequenceCount++;
-
-
-                if(sequenceCount == 1 ) {
-                    Iterator<Tap> tapIterator = taps.iterator();
-                    tapSize = taps.size();
-                    while (tapIterator.hasNext()) {
-                        temp.add(tapIterator.next());
-                    }
-                    String avgData = taps.toString() + "\n";
-                    try {
-                        file.write(avgData.getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    // need to start over if taps.size() != tapsSize
+                if (average.size() >= 1 && average.get(0).size() != taps.size()) {
+                    badTapPopUp();
+                } else if (taps.size() <= 0) {
+                    didNotTapPopUp();
                 } else {
-                    try {
-                        Log.d("**SIZE**", String.valueOf(taps.size()));
-                        Log.d("**SIZE**", String.valueOf(temp.size()));
 
+                    average.add(taps);
 
-/*                        for (int i = 0; i < taps.size(); i++) {
-                            temp.set(i, (temp.get(i).avgUpdateTap(
-                                    taps.get(i).getTime(),
-                                    taps.get(i).getX(),
-                                    taps.get(i).getY(),
-                                    sequenceCount)));
-                   } */
+                    if (average.size() == 3) {
+                        averageAndWriteToFile();
 
+                        average = new ArrayList<List<TapInterface>>();
 
-                        if(sequenceCount < 3) {
-                            String avgData = taps.toString() + "\n";
-                            try {
-                                file.write(avgData.getBytes());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            String avgData = temp.toString() + "\n";
-                            try {
-                                file.write(avgData.getBytes());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        e.printStackTrace();
+                        showPopUp();
                     }
                 }
-
-                taps = new ArrayList<>();
-
+                    taps = new ArrayList<>();
+                    absoluteTapTime = 0;
+                    currentTap = null;
             } else {
-                Log.d("Button", "Started listening.");
-                button.setText("Stop");
-                button.setBackgroundColor(0xFFF44336);
-
+                Log.d("Button", "Started listening for taps.");
+                stopButton();
             }
 
-            listening = !listening;
-
-            if (sequenceCount == 3) {
-                button.setText("Done");
-                button.setBackgroundColor(0x9C9C9C);
-            }
+            listening = ! listening;
 
         }
 
     };
 
-
     View.OnTouchListener gridListener = new View.OnTouchListener() {
 
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
+        public boolean onTouch(View v, MotionEvent e) {
             if (listening) {
-                Log.d("Touch", String.valueOf(event.getEventTime()));
-                Log.d("X", String.valueOf(event.getX()));
-                Log.d("Y", String.valueOf(event.getY()));
+                switch(e.getAction()) {
+                    case android.view.MotionEvent.ACTION_DOWN:
+                        if (absoluteTapTime == 0) {
+                            absoluteTapTime = e.getEventTime();
+                        }
+                        currentTap = new Tap(e.getEventTime() - absoluteTapTime, (int)e.getX(), (int)e.getY());
+                        Log.d("Touch", "Down: " + currentTap.toString());
+                        break;
+                    case android.view.MotionEvent.ACTION_UP:
+                        currentTap.setDuration((e.getEventTime() - absoluteTapTime) - currentTap.getTime());
+                        taps.add(currentTap);
+                        Log.d("Touch", "Up: " + currentTap.toString());
+                        break;
+                }
 
-/*
-                    taps.add(
-                            Tap.record(event.getEventTime(), event.getX(), event.getY()));
-
-*/
+                return true;
             }
 
             return false;
         }
     };
+
+    protected void startButton() {
+        button.setText("Start");
+        button.setBackgroundColor(0xFF4CAF50);
+    }
+
+    protected void stopButton() {
+        button.setText("Stop");
+        button.setBackgroundColor(0xFFF44336);
+    }
+
+    protected void averageAndWriteToFile() {
+
+        List<TapInterface> mean = Compare.meanSeq(this.average);
+        List<TapInterface> stdDev = Compare.standDeviation(this.average);
+
+        String data = sequenceToString(mean) + "\n" + sequenceToString(stdDev);
+
+        try {
+            file.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void showPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("You've successfully registered three tap sequences.")
+                .setCancelable(false)
+                .setPositiveButton("Back to menu", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Dialog d = (Dialog) dialog;
+                        Intent myIntent = new Intent(((Dialog)dialog).getContext(), pistachio.com.biotap.Menu.class);
+                        ((Dialog) dialog).getContext().startActivity(myIntent);
+                    }
+                });
+        builder.create().show();
+    }
+
+    protected void badTapPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("That tap sequence wasn't even close to your first one... We'll throw it, try that one again.")
+                .setCancelable(false)
+                .setPositiveButton("Yeah I messed up", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.create().show();
+    }
+
+    protected void didNotTapPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Did you forget to tap?")
+                .setCancelable(false)
+                .setPositiveButton("Yeah I did", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.create().show();
+    }
+
+    protected String sequenceToString(List<TapInterface> taps) {
+        String data = "";
+
+        for (int i = 0; i < taps.size(); i++) {
+            data += taps.get(i).toString();
+
+            if (i != taps.size() - 1) {
+                data += ",";
+            }
+        }
+
+        return data;
+    }
 }
 
 

@@ -105,23 +105,23 @@ public class CompareTaps {
 		
 		return lines.toArray(new String[lines.size()]);
 	}
-	
+
 	/**
 	 * Map strings to a collection of sequences.
-	 * 
+	 *
 	 * @param lines
 	 * @return
 	 */
 	private static List<List<TapInterface>> mapToCollection(String[] lines) {
 		List<List<TapInterface>> collection = new ArrayList<>();
-		
+
 		for (String line : lines) {
 			collection.add(mapToSequence(line));
 		}
-		
+
 		return collection;
 	}
-	
+
 	/**
 	 * Map a string to sequence.
 	 * 
